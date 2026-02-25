@@ -1,11 +1,16 @@
 import Home from './pages/home'
 import './assets/styles/App.css'
+import Header from './components/layout/header'
+import { BrowserRouter } from 'react-router-dom'
 
 function App() {
 
   return (
     <>
-      <Home />
+      <BrowserRouter>
+        <Header />
+        <Home />
+      </BrowserRouter>
     </>
   )
 }

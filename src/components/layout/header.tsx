@@ -45,7 +45,7 @@ function Header() {
             {/* Ações */}
             <div className="flex items-center gap-3">
                 {/* Login — contornado */}
-                <button className="
+                <Link to="/login" className="
                     cursor-pointer rounded-lg px-4 py-1.5
                     text-sm font-semibold whitespace-nowrap
                     bg-transparent border border-[#B6771D] text-[#FFCF71]
@@ -53,7 +53,7 @@ function Header() {
                     hover:bg-[rgba(182,119,29,0.15)] hover:border-[#FF9D00] hover:text-[#FF9D00]
                 ">
                     Login
-                </button>
+                </Link>
 
                 {/* Criar Conta — preenchido */}
                 <button className="

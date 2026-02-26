@@ -56,7 +56,7 @@ function Header() {
                 </Link>
 
                 {/* Criar Conta — preenchido */}
-                <button className="
+                <Link to="/create-account" className="
                     cursor-pointer rounded-lg px-4 py-1.5
                     text-sm font-semibold whitespace-nowrap
                     bg-gradient-to-br from-[#B6771D] to-[#FF9D00]
@@ -67,7 +67,7 @@ function Header() {
                     hover:-translate-y-px
                 ">
                     Criar Conta
-                </button>
+                </Link>
             </div>
         </header>
     )

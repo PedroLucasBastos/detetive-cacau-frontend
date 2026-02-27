@@ -1,6 +1,33 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { isTokenValid, clearAuthCookies, getAuthToken } from "../../utils/auth";
 
 function Header() {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const checkAuth = () => {
+            const valid = isTokenValid();
+            if (!valid && getAuthToken()) {
+                // apaga os resíduos do cookie mas sem disparar outro evento para evitar loop
+                clearAuthCookies(false);
+            }
+            setIsAuthenticated(valid);
+        };
+
+        window.addEventListener('authStateChange', checkAuth);
+        // Também checa no load
+        checkAuth();
+
+        return () => window.removeEventListener('authStateChange', checkAuth);
+    }, []);
+
+    const handleLogout = () => {
+        clearAuthCookies();
+        navigate('/');
+    };
+
     return (
         <header className="
             fixed top-0 left-0 right-0 z-50
@@ -44,30 +71,47 @@ function Header() {
 
             {/* Ações */}
             <div className="flex items-center gap-3">
-                {/* Login — contornado */}
-                <Link to="/login" className="
-                    cursor-pointer rounded-lg px-4 py-1.5
-                    text-sm font-semibold whitespace-nowrap
-                    bg-transparent border border-[#B6771D] text-[#FFCF71]
-                    transition-all duration-200
-                    hover:bg-[rgba(182,119,29,0.15)] hover:border-[#FF9D00] hover:text-[#FF9D00]
-                ">
-                    Login
-                </Link>
+                {isAuthenticated ? (
+                    <button
+                        onClick={handleLogout}
+                        className="
+                            cursor-pointer rounded-lg px-4 py-1.5
+                            text-sm font-semibold whitespace-nowrap
+                            bg-transparent border border-[#B6771D] text-[#FFCF71]
+                            transition-all duration-200
+                            hover:bg-[rgba(182,119,29,0.15)] hover:border-[#FF9D00] hover:text-[#FF9D00]
+                        "
+                    >
+                        Sair
+                    </button>
+                ) : (
+                    <>
+                        {/* Login — contornado */}
+                        <Link to="/login" className="
+                            cursor-pointer rounded-lg px-4 py-1.5
+                            text-sm font-semibold whitespace-nowrap
+                            bg-transparent border border-[#B6771D] text-[#FFCF71]
+                            transition-all duration-200
+                            hover:bg-[rgba(182,119,29,0.15)] hover:border-[#FF9D00] hover:text-[#FF9D00]
+                        ">
+                            Login
+                        </Link>
 
-                {/* Criar Conta — preenchido */}
-                <Link to="/create-account" className="
-                    cursor-pointer rounded-lg px-4 py-1.5
-                    text-sm font-semibold whitespace-nowrap
-                    bg-gradient-to-br from-[#B6771D] to-[#FF9D00]
-                    border border-transparent text-[#1A0F08]
-                    transition-all duration-200
-                    hover:from-[#FF9D00] hover:to-[#e6bc47]
-                    hover:shadow-[0_0_14px_rgba(255,157,0,0.45)]
-                    hover:-translate-y-px
-                ">
-                    Criar Conta
-                </Link>
+                        {/* Criar Conta — preenchido */}
+                        <Link to="/create-account" className="
+                            cursor-pointer rounded-lg px-4 py-1.5
+                            text-sm font-semibold whitespace-nowrap
+                            bg-gradient-to-br from-[#B6771D] to-[#FF9D00]
+                            border border-transparent text-[#1A0F08]
+                            transition-all duration-200
+                            hover:from-[#FF9D00] hover:to-[#e6bc47]
+                            hover:shadow-[0_0_14px_rgba(255,157,0,0.45)]
+                            hover:-translate-y-px
+                        ">
+                            Criar Conta
+                        </Link>
+                    </>
+                )}
             </div>
         </header>
     )

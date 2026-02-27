@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { setAuthCookies } from "../../utils/auth";
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
@@ -14,11 +15,7 @@ const LoginForm = () => {
 
             const { token, user } = response.data;
 
-
-            localStorage.setItem('token', token);
-
-
-            localStorage.setItem('user', JSON.stringify(user));
+            setAuthCookies(token, user);
 
 
             navigate('/profile');

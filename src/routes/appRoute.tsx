@@ -3,6 +3,7 @@ import LoginPage from "../pages/LoginPage"
 import HomePage from "../pages/home"
 import ProfileUser from "../pages/profileUser"
 import CreateAccoutPage from "../pages/CreateAccoutPage"
+import PetRegister from "../pages/PetRegister"
 
 function AppRoute() {
     return (
@@ -11,6 +12,7 @@ function AppRoute() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/profile" element={<ProfileUser />} />
             <Route path="/create-account" element={<CreateAccoutPage />} />
+            <Route path="/pet-register" element={<PetRegister />} />
         </Routes>
     )
 }

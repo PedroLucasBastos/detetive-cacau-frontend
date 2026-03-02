@@ -377,7 +377,7 @@ const PetRegisterForm = () => {
 
         const token = getAuthToken();
         if (!token) {
-            setGlobalError("Você precisa estar logado para cadastrar um pet.");
+            setGlobalError("Você precisa estar logado para cadastrar um pet");
             return;
         }
 

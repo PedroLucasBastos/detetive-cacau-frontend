@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getAuthToken } from "../utils/auth";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -19,6 +20,30 @@ export interface PetMapData {
     tutorName: string;
     tutorPhone: string;
 }
+
+export interface MyPetData {
+    id: string;
+    name: string;
+    species: string;
+    breed: string;
+    sex: string;
+    isCastrated: boolean;
+    color: string;
+    eyeColor: string | null;
+    age: string | null;
+    distinctiveMarks: string | null;
+    status: string;
+}
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+const authHeaders = () => {
+    const token = getAuthToken();
+    return {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+    };
+};
 
 // ─── Funções do Serviço ───────────────────────────────────────────────────────
 
@@ -49,3 +74,15 @@ export const getPetsNearby = async (
     );
     return data.pets;
 };
+
+/**
+ * Lista os pets do usuário logado (para seleção no formulário de anúncio).
+ */
+export const getMyPets = async (): Promise<MyPetData[]> => {
+    const { data } = await axios.get<MyPetData[]>(
+        `${API_URL}/api/pets`,
+        { headers: authHeaders() }
+    );
+    return data;
+};
+

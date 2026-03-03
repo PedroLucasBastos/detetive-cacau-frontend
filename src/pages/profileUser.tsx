@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { getAuthToken, getAuthUser } from "../utils/auth";
 import { listPetImages } from "../services/petImageService";
@@ -24,11 +25,20 @@ interface PetWithThumb {
 // ─── Componente Principal ─────────────────────────────────────────────────────
 
 function ProfileUser() {
+    const navigate = useNavigate();
     const [pets, setPets] = useState<PetWithThumb[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
     const user = getAuthUser();
+
+    // Redirecionar para login se não autenticado
+    useEffect(() => {
+        const token = getAuthToken();
+        if (!token) {
+            navigate("/login", { replace: true });
+        }
+    }, [navigate]);
 
     useEffect(() => {
         const fetchPets = async () => {
@@ -106,6 +116,31 @@ function ProfileUser() {
                             Olá, {user.name} 👋
                         </p>
                     )}
+                </div>
+
+                {/* Botão CTA — Criar Novo Anúncio */}
+                <div className="mb-6">
+                    <button
+                        type="button"
+                        onClick={() => navigate("/criar-anuncio")}
+                        className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 group"
+                    >
+                        <span className="text-2xl group-hover:scale-110 transition-transform">📢</span>
+                        <span className="text-base">Criar Novo Anúncio</span>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-5 w-5 ml-1 group-hover:translate-x-1 transition-transform"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            aria-hidden="true"
+                        >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                    </button>
+                    <p className="text-xs text-gray-400 text-center mt-1.5">
+                        Perdeu ou encontrou um animal? Crie um anúncio para ajudar.
+                    </p>
                 </div>
 
                 {/* Seção de Pets */}

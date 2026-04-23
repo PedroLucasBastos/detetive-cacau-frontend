@@ -32,7 +32,7 @@ function Header() {
     return (
         <header className="header">
             <div className="logo">
-                <img src="public\img\patinha.png" alt="logo" className="logo-img"/>
+                <img src="/img/patinha.png" alt="logo" className="logo-img" />
                 <span>Detetive Cacau</span>
             </div>
             <nav className="nav">
@@ -52,22 +52,22 @@ function Header() {
                             </Link>
                         )
                     })
-                 }
+                }
             </nav>
             <div className="actions">
-                {isAuthenticated ?(
+                {isAuthenticated ? (
                     <button onClick={handleLogout} className="btn outline">
                         Sair
                     </button>
-                ):(
+                ) : (
                     <>
-                    <Link to="/login" className="btn outline">
-                    Login
-                    </Link>
+                        <Link to="/login" className="btn outline">
+                            Login
+                        </Link>
 
-                    <Link to="/create-account" className="btn filled">
-                    Criar conta
-                    </Link>
+                        <Link to="/create-account" className="btn filled">
+                            Criar conta
+                        </Link>
                     </>
                 )}
             </div>

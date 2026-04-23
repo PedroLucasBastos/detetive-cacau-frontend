@@ -55,11 +55,8 @@ function ProfileUser() {
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
 
-                // Filtrar apenas os pets do usuário logado
-                const myPets = data.filter((p) => user && p.images !== undefined);
-
-                // Inicializar sem thumbs
-                const petsWithThumbs: PetWithThumb[] = myPets.map((pet) => ({
+                // Backend já retorna apenas os pets do usuário logado
+                const petsWithThumbs: PetWithThumb[] = data.map((pet) => ({
                     pet,
                     thumbUrl: null,
                     loadingThumb: pet.images.length > 0,

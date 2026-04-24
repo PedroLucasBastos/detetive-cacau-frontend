@@ -35,11 +35,11 @@ const LoginForm = () => {
                 <form onSubmit={handleSubmit}>
                     <div className="input-group">
                         <label>Email</label>
-                        <input type="email" placeholder="exemplo@email.com" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+                        <input type="email" placeholder="exemplo@email.com" value={email} onChange={(e) => setEmail(e.target.value)} />
                     </div>
                     <div className="input-group">
                         <label>Senha</label>
-                        <input type="password" placeholder="Insira sua senha" value={password} onChange={(e)=>setPassword(e.target.value)}/>
+                        <input type="password" placeholder="Insira sua senha" value={password} onChange={(e) => setPassword(e.target.value)} />
                     </div>
                     <button type="submit" className="login-btn">
                         Entrar
@@ -47,7 +47,7 @@ const LoginForm = () => {
                 </form>
                 <div className="divider">ou continue com</div>
                 <button className="google-btn">
-                    <img src="public\img\google.png" alt="google" className="google-icon"/>
+                    <img src="\img\google.png" alt="google" className="google-icon" />
                     Entrar com Google
                 </button>
                 <p className="register-text">
@@ -55,7 +55,7 @@ const LoginForm = () => {
                 </p>
             </div>
             <div className="login-right">
-                <img src="public\img\dog.png" alt="dog" className="login-img"/>
+                <img src="\img\dog.png" alt="dog" className="login-img" />
                 <div className="overlay">
                     <p>
                         "Graças ao Detetive Cacau, reencontrei meu melhor amigo em menos de 24 horas.

@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { setAuthCookies } from "../../utils/auth";
+import './loginForm.css'
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
@@ -27,35 +28,43 @@ const LoginForm = () => {
 
 
     return (
-        <>
-            <div className="flex items-center justify-center min-h-screen">
-                <div>
-                    <h1 className="text-2xl font-bold mb-4">Login</h1>
-                    <form onSubmit={handleSubmit}>
-                        <div>
-                            <label htmlFor="email">Email</label>
-                            <input type="email"
-                                id="email"
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label htmlFor="password">Senha</label>
-                            <input type="password"
-                                id="password"
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                        </div>
-                        <button type="submit"
-                            className="w-full bg-blue-500 text-white py-2 rounded-md">Login</button>
-                    </form>
+        <div className="login-container">
+            <div className="login-left">
+                <h1>Bem-vindo de volta!</h1>
+                <p>Acesse sua conta para gerenciar alertas e ajudar a reunir pets com seus donos.</p>
+                <form onSubmit={handleSubmit}>
+                    <div className="input-group">
+                        <label>Email</label>
+                        <input type="email" placeholder="exemplo@email.com" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+                    </div>
+                    <div className="input-group">
+                        <label>Senha</label>
+                        <input type="password" placeholder="Insira sua senha" value={password} onChange={(e)=>setPassword(e.target.value)}/>
+                    </div>
+                    <button type="submit" className="login-btn">
+                        Entrar
+                    </button>
+                </form>
+                <div className="divider">ou continue com</div>
+                <button className="google-btn">
+                    <img src="public\img\google.png" alt="google" className="google-icon"/>
+                    Entrar com Google
+                </button>
+                <p className="register-text">
+                    Não tem conta? <span> Cadastrar</span>
+                </p>
+            </div>
+            <div className="login-right">
+                <img src="public\img\dog.png" alt="dog" className="login-img"/>
+                <div className="overlay">
+                    <p>
+                        "Graças ao Detetive Cacau, reencontrei meu melhor amigo em menos de 24 horas.
+                        Uma comunidade incrível!"
+                    </p>
+                    <span>-Julia & Pipoca</span>
                 </div>
             </div>
-        </>
+        </div>
     )
 };
 

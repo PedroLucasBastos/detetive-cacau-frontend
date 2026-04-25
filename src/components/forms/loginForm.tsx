@@ -1,14 +1,14 @@
 import axios from "axios";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { setAuthCookies } from "../../utils/auth";
+import { useGoogleLogin } from '@react-oauth/google';
 import './loginForm.css'
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-    const googleButtonRef = useRef<HTMLDivElement>(null);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -19,80 +19,40 @@ const LoginForm = () => {
 
             setAuthCookies(token, user);
 
-
             navigate('/profile');
         } catch (error: any) {
             console.error('Erro no login:', error.response?.data?.message || error.message);
-
         }
     };
 
     // ─── Google OAuth2 ─────────────────────────────────────────────────────────
 
-    const handleGoogleResponse = useCallback(async (response: { credential: string }) => {
-        try {
-            const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/google`, {
-                idToken: response.credential,
-            });
-
-            // Usuário novo — precisa completar cadastro
-            if (res.data.needsRegistration) {
-                navigate('/create-account', {
-                    state: { googleData: res.data.googleData },
+    const handleGoogleLogin = useGoogleLogin({
+        onSuccess: async (tokenResponse) => {
+            try {
+                // Envia o access_token para o backend validar e buscar o perfil
+                const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/google`, {
+                    accessToken: tokenResponse.access_token,
                 });
-                return;
-            }
 
-            // Usuário já existe — login direto
-            const { token, user } = res.data;
-            setAuthCookies(token, user);
-            navigate('/profile');
-        } catch (error: any) {
-            console.error('Erro no login com Google:', error.response?.data?.message || error.message);
-        }
-    }, [navigate]);
-
-    useEffect(() => {
-        const initializeGoogle = () => {
-            if (!window.google?.accounts?.id) return;
-
-            window.google.accounts.id.initialize({
-                client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
-                callback: handleGoogleResponse,
-            });
-
-            // Renderiza o botão do Google num container oculto para podermos triggar o clique
-            if (googleButtonRef.current) {
-                window.google.accounts.id.renderButton(googleButtonRef.current, {
-                    type: 'standard',
-                    size: 'large',
-                    theme: 'outline',
-                });
-            }
-        };
-
-        // O GoogleOAuthProvider pode levar um momento para carregar o script
-        if (window.google?.accounts?.id) {
-            initializeGoogle();
-        } else {
-            const checkInterval = setInterval(() => {
-                if (window.google?.accounts?.id) {
-                    initializeGoogle();
-                    clearInterval(checkInterval);
+                // Usuário novo — precisa completar cadastro
+                if (res.data.needsRegistration) {
+                    navigate('/create-account', {
+                        state: { googleData: res.data.googleData },
+                    });
+                    return;
                 }
-            }, 100);
 
-            return () => clearInterval(checkInterval);
-        }
-    }, [handleGoogleResponse]);
-
-    const handleGoogleButtonClick = () => {
-        // Dispara o clique no botão renderizado pelo Google (oculto)
-        const googleBtn = googleButtonRef.current?.querySelector('[role="button"]') as HTMLElement;
-        if (googleBtn) {
-            googleBtn.click();
-        }
-    };
+                // Usuário já existe — login direto
+                const { token, user } = res.data;
+                setAuthCookies(token, user);
+                navigate('/profile');
+            } catch (error: any) {
+                console.error('Erro no login com Google:', error.response?.data?.message || error.message);
+            }
+        },
+        onError: errorResponse => console.error("Erro no popup do Google:", errorResponse),
+    });
 
     return (
         <div className="login-container">
@@ -113,9 +73,7 @@ const LoginForm = () => {
                     </button>
                 </form>
                 <div className="divider">ou continue com</div>
-                {/* Container oculto onde o Google renderiza seu botão real (para obter o idToken) */}
-                <div ref={googleButtonRef} style={{ position: 'absolute', opacity: 0, pointerEvents: 'none', height: 0, overflow: 'hidden' }} />
-                <button className="google-btn" onClick={handleGoogleButtonClick} type="button">
+                <button className="google-btn" onClick={() => handleGoogleLogin()} type="button">
                     <img src="\img\google.png" alt="google" className="google-icon" />
                     Entrar com Google
                 </button>
@@ -137,4 +95,4 @@ const LoginForm = () => {
     )
 };
 
-export default LoginForm
+export default LoginForm;

@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { isTokenValid, clearAuthCookies, getAuthToken } from "../../utils/auth";
 import './header.css'
@@ -6,6 +6,7 @@ import './header.css'
 function Header() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         const checkAuth = () => {
@@ -29,9 +30,11 @@ function Header() {
         navigate('/');
     };
 
+    const isProfilePage = location.pathname === '/profile';
+
     return (
         <header className="header">
-            <div className="logo">
+            <div className="logo" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
                 <img src="/img/patinha.png" alt="logo" className="logo-img" />
                 <span>Detetive Cacau</span>
             </div>
@@ -56,9 +59,16 @@ function Header() {
             </nav>
             <div className="actions">
                 {isAuthenticated ? (
-                    <button onClick={handleLogout} className="btn outline">
-                        Sair
-                    </button>
+                    <>
+                        {!isProfilePage && (
+                            <Link to="/profile" className="btn filled">
+                                Meu Perfil
+                            </Link>
+                        )}
+                        <button onClick={handleLogout} className="btn outline">
+                            Sair
+                        </button>
+                    </>
                 ) : (
                     <>
                         <Link to="/login" className="btn outline">

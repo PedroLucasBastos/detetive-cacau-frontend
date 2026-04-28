@@ -197,7 +197,8 @@ function ProfileUser() {
                             {pets.map(({ pet, thumbUrl, loadingThumb }) => (
                                 <div
                                     key={pet.id}
-                                    className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow"
+                                    onClick={() => navigate(`/meus-pets/${pet.id}`)}
+                                    className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow cursor-pointer"
                                 >
                                     {/* Foto */}
                                     <div className="aspect-square bg-gray-100 flex items-center justify-center">

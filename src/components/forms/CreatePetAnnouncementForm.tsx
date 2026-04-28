@@ -6,7 +6,7 @@ import { getAuthToken, getAuthUser } from "../../utils/auth";
 import { getMyPets } from "../../services/petService";
 import type { MyPetData } from "../../services/petService";
 import { createAnnouncement } from "../../services/announcementService";
-import { uploadPetImage, deletePetImage } from "../../services/petImageService";
+import { uploadPetImage, deletePetImage, listPetImages } from "../../services/petImageService";
 
 // ─── Tipos ────────────────────────────────────────────────────────────────────
 
@@ -725,8 +725,24 @@ const CreatePetAnnouncementForm = () => {
 
             const result = await createAnnouncement(payload);
             setCreatedPetId(result.petId);
+
+            // Se o pet já existia, busca as fotos que ele já possui no servidor
+            if (formData.selectedPetId) {
+                try {
+                    const existingImages = await listPetImages(result.petId);
+                    setPhotos(existingImages.map(img => ({
+                        id: img.id,
+                        previewUrl: img.url || "",
+                        status: "done" as PhotoStatus,
+                        uploadedImageId: img.id
+                    })));
+                } catch (e) {
+                    console.error("Erro ao carregar fotos do pet", e);
+                }
+            }
+
             setIsUploadPhase(true);
-            setSuccessMessage("Anúncio criado com sucesso! Agora você pode adicionar fotos.");
+            setSuccessMessage("Anúncio criado com sucesso! Você pode gerenciar as fotos abaixo.");
         } catch (err: any) {
             const message =
                 err.response?.data?.message ||

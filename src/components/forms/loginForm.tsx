@@ -21,6 +21,12 @@ const LoginForm = () => {
 
             navigate('/profile');
         } catch (error: any) {
+            if (error.response?.status === 403 && error.response?.data?.needsVerification) {
+                navigate('/verify-email', {
+                    state: { userId: error.response.data.userId }
+                });
+                return;
+            }
             console.error('Erro no login:', error.response?.data?.message || error.message);
         }
     };

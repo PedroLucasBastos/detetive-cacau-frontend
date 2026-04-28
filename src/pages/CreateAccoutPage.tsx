@@ -57,12 +57,11 @@ const CreateAccountForm = () => {
                 setAuthCookies(token, user);
                 navigate('/profile');
             } else {
-                // Cadastro tradicional com email/senha
+                // Cadastro tradicional com email/senha (retorna apenas message e userId)
                 const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`, formData);
-
-                const { token, user } = response.data;
-                setAuthCookies(token, user);
-                navigate('/profile');
+                navigate('/verify-email', {
+                    state: { userId: response.data.userId }
+                });
             }
         } catch (error: any) {
             setError(error.response?.data?.message || "Erro ao criar conta");

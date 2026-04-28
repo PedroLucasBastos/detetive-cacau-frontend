@@ -6,6 +6,7 @@ import CreateAccoutPage from "../pages/CreateAccoutPage"
 import PetRegister from "../pages/PetRegister"
 import CreatePetAnnouncement from "../pages/CreatePetAnnouncement"
 import PetDetails from "../pages/PetDetails"
+import VerifyEmailPage from "../pages/VerifyEmailPage"
 
 function AppRoute() {
     return (
@@ -17,6 +18,7 @@ function AppRoute() {
             <Route path="/pet-register" element={<PetRegister />} />
             <Route path="/criar-anuncio" element={<CreatePetAnnouncement />} />
             <Route path="/meus-pets/:id" element={<PetDetails />} />
+            <Route path="/verify-email" element={<VerifyEmailPage />} />
         </Routes>
     )
 }

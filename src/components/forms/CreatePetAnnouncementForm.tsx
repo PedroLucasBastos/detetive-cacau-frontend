@@ -5,7 +5,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { getAuthToken, getAuthUser } from "../../utils/auth";
 import { getMyPets } from "../../services/petService";
 import type { MyPetData } from "../../services/petService";
-import { createAnnouncement } from "../../services/announcementService";
+import { createAnnouncement, deleteAnnouncement } from "../../services/announcementService";
 import { uploadPetImage, deletePetImage, listPetImages } from "../../services/petImageService";
 
 // ─── Tipos ────────────────────────────────────────────────────────────────────
@@ -479,6 +479,7 @@ const CreatePetAnnouncementForm = () => {
     // ── Estado de fotos ─────────────────────────────────────────────────────
     const [photos, setPhotos] = useState<PhotoItem[]>([]);
     const [createdPetId, setCreatedPetId] = useState<string | null>(null);
+    const [createdAnnouncementId, setCreatedAnnouncementId] = useState<string | null>(null);
     const hasUploading = photos.some((p) => p.status === "uploading");
 
     // ── Fase pós-submissão (upload de fotos) ────────────────────────────────
@@ -725,6 +726,7 @@ const CreatePetAnnouncementForm = () => {
 
             const result = await createAnnouncement(payload);
             setCreatedPetId(result.petId);
+            setCreatedAnnouncementId(result.id);
 
             // Se o pet já existia, busca as fotos que ele já possui no servidor
             if (formData.selectedPetId) {
@@ -750,6 +752,20 @@ const CreatePetAnnouncementForm = () => {
                 "Erro ao criar anúncio. Tente novamente.";
             setGlobalError(message);
         } finally {
+            setLoading(false);
+        }
+    };
+
+    // ── Handle Cancelar Anúncio (Fase Upload) ───────────────────────────────
+
+    const handleCancelAnnouncement = async () => {
+        if (!createdAnnouncementId) return;
+        try {
+            setLoading(true);
+            await deleteAnnouncement(createdAnnouncementId);
+            navigate("/profile");
+        } catch (err) {
+            setGlobalError("Erro ao cancelar o anúncio. Tente novamente.");
             setLoading(false);
         }
     };
@@ -897,11 +913,19 @@ const CreatePetAnnouncementForm = () => {
                             </p>
                         )}
 
-                        <div className="flex gap-3">
+                        <div className="flex gap-3 mt-6">
+                            <button
+                                type="button"
+                                onClick={handleCancelAnnouncement}
+                                disabled={loading}
+                                className="flex-1 bg-red-100 hover:bg-red-200 text-red-600 font-bold py-2.5 rounded-md transition-colors"
+                            >
+                                Cancelar Anúncio
+                            </button>
                             <button
                                 type="button"
                                 onClick={handleFinish}
-                                disabled={hasUploading || doneCount === 0}
+                                disabled={hasUploading || doneCount === 0 || loading}
                                 className="flex-1 bg-green-500 hover:bg-green-600 disabled:bg-green-300 disabled:cursor-not-allowed text-white font-bold py-2.5 rounded-md transition-colors"
                             >
                                 Concluir

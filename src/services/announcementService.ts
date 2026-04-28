@@ -101,3 +101,15 @@ export const resolveAnnouncement = async (
     );
     return data;
 };
+
+/**
+ * Remove (deleta) um anúncio.
+ */
+export const deleteAnnouncement = async (
+    announcementId: string
+): Promise<void> => {
+    await axios.delete(
+        `${API_URL}/api/announcements/${announcementId}`,
+        { headers: authHeaders() }
+    );
+};

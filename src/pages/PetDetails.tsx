@@ -283,7 +283,7 @@ function PetDetails() {
         try {
             const record = await uploadPetImage(id, item.file!);
             setPhotos((prev) =>
-                prev.map((p) => p.id === item.id ? { ...p, status: "done", uploadedImageId: record.id, previewUrl: record.url } : p)
+                prev.map((p) => p.id === item.id ? { ...p, status: "done", uploadedImageId: record.id, previewUrl: record.url || "" } : p)
             );
         } catch (err: any) {
             setPhotos((prev) =>

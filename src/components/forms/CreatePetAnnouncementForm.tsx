@@ -38,7 +38,7 @@ type PhotoStatus = "uploading" | "done" | "error";
 
 interface PhotoItem {
     id: string;
-    file: File;
+    file?: File;
     previewUrl: string;
     status: PhotoStatus;
     uploadedImageId?: string;
@@ -773,7 +773,7 @@ const CreatePetAnnouncementForm = () => {
     // ── Handlers de Fotos (Fase de Upload) ──────────────────────────────────
 
     const processUpload = async (item: PhotoItem) => {
-        if (!createdPetId) return;
+        if (!createdPetId || !item.file) return;
 
         try {
             const record = await uploadPetImage(createdPetId, item.file);

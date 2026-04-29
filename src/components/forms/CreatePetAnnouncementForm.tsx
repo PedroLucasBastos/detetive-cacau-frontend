@@ -7,6 +7,7 @@ import { getMyPets } from "../../services/petService";
 import type { MyPetData } from "../../services/petService";
 import { createAnnouncement, deleteAnnouncement } from "../../services/announcementService";
 import { uploadPetImage, deletePetImage, listPetImages } from "../../services/petImageService";
+import { useUserLocation } from "../../hooks/useUserLocation";
 
 // ─── Tipos ────────────────────────────────────────────────────────────────────
 
@@ -475,6 +476,8 @@ const CreatePetAnnouncementForm = () => {
     const mapContainer = useRef<HTMLDivElement>(null);
     const map = useRef<maplibregl.Map | null>(null);
     const marker = useRef<maplibregl.Marker | null>(null);
+    const { location: userLocation } = useUserLocation();
+    const hasCenteredOnUser = useRef(false);
 
     // ── Estado de fotos ─────────────────────────────────────────────────────
     const [photos, setPhotos] = useState<PhotoItem[]>([]);
@@ -540,10 +543,15 @@ const CreatePetAnnouncementForm = () => {
     const initMap = useCallback(() => {
         if (map.current || !mapContainer.current) return;
 
+        const initialCenter: [number, number] = userLocation || [-41.679051, -21.135639];
+        if (userLocation) {
+            hasCenteredOnUser.current = true;
+        }
+
         map.current = new maplibregl.Map({
             container: mapContainer.current,
             style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${API_KEY}`,
-            center: [-41.679051, -21.135639],
+            center: initialCenter,
             zoom: 14,
             attributionControl: false,
         });
@@ -556,7 +564,7 @@ const CreatePetAnnouncementForm = () => {
             setLocation({ lat, lng });
             placeMarker(lng, lat);
         });
-    }, [API_KEY]);
+    }, [API_KEY, userLocation]);
 
     useEffect(() => {
         if (currentStep === 4) {
@@ -575,6 +583,19 @@ const CreatePetAnnouncementForm = () => {
             }
         };
     }, []);
+
+    // ── Atualização suave do centro quando a localização chegar ───────────
+    useEffect(() => {
+        if (currentStep === 4 && map.current && userLocation && !hasCenteredOnUser.current) {
+            hasCenteredOnUser.current = true;
+            map.current.flyTo({
+                center: userLocation,
+                zoom: 14,
+                essential: true,
+                duration: 2000 // Transição suave
+            });
+        }
+    }, [userLocation, currentStep]);
 
     const placeMarker = (lng: number, lat: number) => {
         if (!map.current) return;

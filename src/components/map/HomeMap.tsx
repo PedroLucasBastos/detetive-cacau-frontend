@@ -3,6 +3,7 @@ import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { getPetsNearby } from '../../services/petService';
 import type { PetMapData } from '../../services/petService';
+import { useUserLocation } from '../../hooks/useUserLocation';
 
 // Coordenada Inicial padrão
 const DEFAULT_CENTER: [number, number] = [-41.679051, -21.135639];
@@ -32,6 +33,9 @@ export default function HomeMap() {
     const mapContainer = useRef<HTMLDivElement>(null);
     const map = useRef<maplibregl.Map | null>(null);
     const markersRef = useRef<{ [petId: string]: maplibregl.Marker }>({});
+
+    const { location: userLocation } = useUserLocation();
+    const hasCenteredOnUser = useRef(false);
 
     const [isLoading, setIsLoading] = useState(false);
     const debounceTimerRef = useRef<number | null>(null);
@@ -79,10 +83,15 @@ export default function HomeMap() {
         if (map.current) return;
         if (!mapContainer.current) return;
 
+        const initialCenter = userLocation || DEFAULT_CENTER;
+        if (userLocation) {
+            hasCenteredOnUser.current = true;
+        }
+
         map.current = new maplibregl.Map({
             container: mapContainer.current,
             style: `https://api.maptiler.com/maps/streets-v2/style.json?key=${API_KEY}`,
-            center: DEFAULT_CENTER,
+            center: initialCenter,
             zoom: DEFAULT_ZOOM,
             attributionControl: false,
         });
@@ -118,6 +127,19 @@ export default function HomeMap() {
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    // ── Atualização suave do centro quando a localização chegar ───────────
+    useEffect(() => {
+        if (map.current && userLocation && !hasCenteredOnUser.current) {
+            hasCenteredOnUser.current = true;
+            map.current.flyTo({
+                center: userLocation,
+                zoom: DEFAULT_ZOOM,
+                essential: true,
+                duration: 2000 // Transição suave para a localização do usuário
+            });
+        }
+    }, [userLocation]);
 
     /**
      * Sincroniza os marcadores no mapa com os pets recebidos da API.

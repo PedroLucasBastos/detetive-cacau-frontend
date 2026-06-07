@@ -1,24 +1,25 @@
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { setAuthCookies } from "../../utils/auth";
 import { useGoogleLogin } from '@react-oauth/google';
-import './loginForm.css'
+import './loginForm.css';
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError('');
+        setLoading(true);
         try {
             const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, { email, password });
-
             const { token, user } = response.data;
-
             setAuthCookies(token, user);
-
             navigate('/profile');
         } catch (error: any) {
             if (error.response?.status === 403 && error.response?.data?.needsVerification) {
@@ -27,29 +28,22 @@ const LoginForm = () => {
                 });
                 return;
             }
-            console.error('Erro no login:', error.response?.data?.message || error.message);
+            setError(error.response?.data?.message || 'Email ou senha inválidos.');
+        } finally {
+            setLoading(false);
         }
     };
-
-    // ─── Google OAuth2 ─────────────────────────────────────────────────────────
 
     const handleGoogleLogin = useGoogleLogin({
         onSuccess: async (tokenResponse) => {
             try {
-                // Envia o access_token para o backend validar e buscar o perfil
                 const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/google`, {
                     accessToken: tokenResponse.access_token,
                 });
-
-                // Usuário novo — precisa completar cadastro
                 if (res.data.needsRegistration) {
-                    navigate('/create-account', {
-                        state: { googleData: res.data.googleData },
-                    });
+                    navigate('/create-account', { state: { googleData: res.data.googleData } });
                     return;
                 }
-
-                // Usuário já existe — login direto
                 const { token, user } = res.data;
                 setAuthCookies(token, user);
                 navigate('/profile');
@@ -62,43 +56,77 @@ const LoginForm = () => {
 
     return (
         <div className="login-container">
+
+            {/* ── Coluna esquerda: formulário ── */}
             <div className="login-left">
+
+                {/* Logo visível só no mobile */}
+                <div className="login-logo-mobile">
+                    <img src="/img/patinha.png" alt="logo" width={26} height={26} />
+                    <span>Detetive Cacau</span>
+                </div>
+
                 <h1>Bem-vindo de volta!</h1>
                 <p>Acesse sua conta para gerenciar alertas e ajudar a reunir pets com seus donos.</p>
+
                 <form onSubmit={handleSubmit}>
                     <div className="input-group">
-                        <label>Email</label>
-                        <input type="email" placeholder="exemplo@email.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+                        <label htmlFor="login-email">Email</label>
+                        <input
+                            id="login-email"
+                            type="email"
+                            placeholder="exemplo@email.com"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
                     </div>
+
                     <div className="input-group">
-                        <label>Senha</label>
-                        <input type="password" placeholder="Insira sua senha" value={password} onChange={(e) => setPassword(e.target.value)} />
+                        <label htmlFor="login-password">Senha</label>
+                        <input
+                            id="login-password"
+                            type="password"
+                            placeholder="Insira sua senha"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
                     </div>
-                    <button type="submit" className="login-btn">
-                        Entrar
+
+                    {error && <p className="login-error">{error}</p>}
+
+                    <button type="submit" className="login-btn" disabled={loading}>
+                        {loading ? 'Entrando...' : 'Entrar'}
                     </button>
                 </form>
+
                 <div className="divider">ou continue com</div>
+
                 <button className="google-btn" onClick={() => handleGoogleLogin()} type="button">
-                    <img src="\img\google.png" alt="google" className="google-icon" />
+                    <img src="/img/google.png" alt="google" className="google-icon" />
                     Entrar com Google
                 </button>
+
                 <p className="register-text">
-                    Não tem conta? <span> Cadastrar</span>
+                    Não tem conta?{' '}
+                    <Link to="/create-account"><span>Cadastrar</span></Link>
                 </p>
             </div>
+
+            {/* ── Coluna direita: imagem decorativa ── */}
             <div className="login-right">
-                <img src="\img\dog.png" alt="dog" className="login-img" />
+                <img src="/img/dog.png" alt="Cachorro feliz" className="login-img" />
                 <div className="overlay">
                     <p>
                         "Graças ao Detetive Cacau, reencontrei meu melhor amigo em menos de 24 horas.
                         Uma comunidade incrível!"
                     </p>
-                    <span>-Julia &amp; Pipoca</span>
+                    <span>— Julia &amp; Pipoca</span>
                 </div>
             </div>
         </div>
-    )
+    );
 };
 
 export default LoginForm;

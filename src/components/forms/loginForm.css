@@ -1,34 +1,34 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-
-.login-container{
+/* ════════════════════════════════════════════════════════════════
+   LOGIN — Layout
+════════════════════════════════════════════════════════════════ */
+.login-container {
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
 }
-.login-left{
+
+/* ── Coluna esquerda: formulário ── */
+.login-left {
     width: 50%;
-    padding: 60px;
+    padding: 60px 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: stretch;
+    background-color: #fff;
 }
 
-.login-left h1{
+.login-left h1 {
     font-size: 32px;
     margin-bottom: 10px;
-    color:#161413;
+    color: #161413;
     font-weight: bold;
     width: 80%;
     margin-left: auto;
     margin-right: auto;
 }
-.login-left p{
-    color:#7E746D;
+
+.login-left p {
+    color: #7E746D;
     margin-bottom: 30px;
     line-height: 1.5;
     width: 80%;
@@ -36,157 +36,287 @@
     margin-right: auto;
 }
 
-.input-group{
+/* ── Logo visível só no mobile ── */
+.login-logo-mobile {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #3D2B1F;
+    letter-spacing: 0.5px;
+    margin-bottom: 28px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+
+/* ── Inputs ── */
+.input-group {
     width: 80%;
     margin-left: auto;
     margin-right: auto;
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
-.input-group label{
+.input-group label {
     margin-bottom: 6px;
     font-size: 14px;
-    color:#161413;
+    color: #161413;
+    font-weight: 500;
 }
 
-.input-group input{
+.input-group input {
     padding: 12px 14px;
     border-radius: 50px;
     border: 1px solid #E3E0DE;
     font-size: 14px;
-    transition: 0.2s;
-}
-
-.input-group input:focus{
+    transition: border-color 0.2s;
+    height: 46px;
     outline: none;
-    box-shadow: none;
-    border: 1px solid #E3E0DE;
+    font-family: inherit;
 }
 
-.login-btn{
+.input-group input:focus {
+    border-color: #3D2B1F;
+    box-shadow: 0 0 0 3px rgba(61, 43, 31, 0.08);
+}
+
+/* ── Mensagem de erro ── */
+.login-error {
     width: 80%;
     margin-left: auto;
     margin-right: auto;
-    height: 55px;
-    background-color: #3D2B1F;
-    color: #fff;
-    padding: 14px;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 16px;
-    font-weight: 600;
-}
-.login-btn:hover{
-    background-color: #66442d;
-}
-
-.divider{
-    width: 80%;
-    margin: 25px auto;
+    color: #b91c1c;
+    font-size: 13px;
+    margin-bottom: 10px;
     text-align: center;
-    color:#7E746D;
-    font-size: 14px;
-    position: relative;
 }
 
-.divider::before, .divider::after{
-    content: "";
-    position: absolute;
-    height: 1px;
-    width: 30%;
-    background: #E3E0DE;
-    top: 50%;
-}
-.divider::before{
-    left:0;
-}
-.divider::after{
-    right: 0;
-}
-
-.google-btn{
+/* ── Botão de login ── */
+.login-btn {
     width: 80%;
     margin-left: auto;
     margin-right: auto;
     height: 50px;
+    background-color: #3D2B1F;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: inherit;
+    transition: background-color 0.2s;
+    margin-top: 4px;
+}
 
+.login-btn:hover {
+    background-color: #66442d;
+}
+
+.login-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* ── Divider "ou continue com" ── */
+.divider {
+    width: 80%;
+    margin: 22px auto;
+    text-align: center;
+    color: #7E746D;
+    font-size: 14px;
+    position: relative;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    position: absolute;
+    height: 1px;
+    width: 28%;
+    background: #E3E0DE;
+    top: 50%;
+}
+
+.divider::before { left: 0; }
+.divider::after  { right: 0; }
+
+/* ── Botão Google ── */
+.google-btn {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-
     border-radius: 50px;
     border: 1px solid #E3E0DE;
     background: #fff;
     cursor: pointer;
-    outline: none;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: inherit;
+    transition: background-color 0.2s;
 }
-.google-btn:hover{
-    background-color: #E3E0DE;
-    border: #fff;
+
+.google-btn:hover {
+    background-color: #f3f2f1;
 }
-.google-icon{
+
+.google-icon {
     width: 20px;
     height: 20px;
 }
 
-.register-text{
+/* ── Link de cadastro ── */
+.register-text {
     width: 80%;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 20px;
+    margin-top: 18px;
     font-size: 14px;
-    color:#E3E0DE;
+    color: #7E746D;
     text-align: center;
 }
-.register-text span{
-    font-weight: bold;
-    cursor: pointer;
-    color:#3D2B1F;
+
+.register-text a {
+    text-decoration: none;
 }
 
-.login-right{
+.register-text span {
+    font-weight: bold;
+    cursor: pointer;
+    color: #3D2B1F;
+}
+
+/* ── Coluna direita: imagem decorativa ── */
+.login-right {
     width: 50%;
     position: relative;
     overflow: hidden;
 }
-.login-img{
+
+.login-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-.login-right::after{
-    content:"";
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.35);
+    display: block;
 }
 
-.overlay{
+.login-right::after {
+    content: "";
     position: absolute;
-    bottom: 50px;
-    left: 50px;
-    color:#fff;
-    max-width: 350px;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.55) 100%);
+}
+
+.overlay {
+    position: absolute;
+    bottom: 48px;
+    left: 40px;
+    right: 40px;
+    color: #fff;
     z-index: 2;
 }
-.overlay p{
+
+.overlay p {
     font-size: 18px;
-    line-height: 1.4;
+    line-height: 1.5;
     margin-bottom: 10px;
 }
 
-.overlay span{
+.overlay span {
     font-size: 14px;
-    opacity: 0.9;
+    opacity: 0.85;
 }
 
+/* ════════════════════════════════════════════════════════════════
+   RESPONSIVE — TABLET  (≤ 900px)
+════════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+    .login-container {
+        flex-direction: column;
+    }
 
+    /* Imagem vira banner no topo */
+    .login-right {
+        width: 100%;
+        height: 240px;
+        order: -1;
+    }
+
+    .overlay {
+        bottom: 24px;
+        left: 24px;
+        right: 24px;
+    }
+
+    .overlay p { font-size: 16px; }
+
+    /* Formulário ocupa largura total */
+    .login-left {
+        width: 100%;
+        padding: 36px 24px 48px;
+        justify-content: flex-start;
+    }
+
+    .login-left h1,
+    .login-left p,
+    .login-logo-mobile,
+    .input-group,
+    .login-btn,
+    .divider,
+    .google-btn,
+    .register-text,
+    .login-error {
+        width: 100%;
+        max-width: 480px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   RESPONSIVE — MOBILE  (≤ 640px)
+════════════════════════════════════════════════════════════════ */
+@media (max-width: 640px) {
+    /* Esconde imagem */
+    .login-right {
+        display: none;
+    }
+
+    .login-left {
+        width: 100%;
+        min-height: 100vh;
+        padding: 48px 20px 40px;
+        justify-content: center;
+    }
+
+    /* Mostra logo no mobile */
+    .login-logo-mobile {
+        display: flex;
+    }
+
+    .login-left h1 { font-size: 26px; }
+    .login-left p  { font-size: 14px; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   RESPONSIVE — EXTRA SMALL  (≤ 380px)
+════════════════════════════════════════════════════════════════ */
+@media (max-width: 380px) {
+    .login-left {
+        padding: 36px 16px 36px;
+    }
+
+    .login-left h1 { font-size: 22px; }
+}

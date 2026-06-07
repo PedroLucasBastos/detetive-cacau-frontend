@@ -86,3 +86,49 @@ export const getMyPets = async (): Promise<MyPetData[]> => {
     return data;
 };
 
+// ─── Tipo de detalhe completo do Pet ──────────────────────────────────────────
+
+export interface PetDetail {
+    id: string;
+    name: string;
+    species: string;
+    breed: string;
+    sex: string;
+    isCastrated: boolean;
+    color: string;
+    eyeColor: string | null;
+    age: string | null;
+    distinctiveMarks: string | null;
+    status: string;
+    lostAt: string | null;
+    foundAt: string | null;
+    images: {
+        id: string;
+        path: string;
+        isPublic: boolean;
+        order: number;
+        url?: string | null;
+    }[];
+    locations: {
+        id: string;
+        latitude: number;
+        longitude: number;
+        createdAt: string;
+    }[];
+}
+
+/**
+ * Busca os dados completos de um pet específico do usuário logado.
+ *
+ * @param petId ID do pet a ser buscado
+ * @returns Dados completos do pet incluindo imagens e localizações
+ */
+export const getPetById = async (petId: string): Promise<PetDetail> => {
+    const { data } = await axios.get<PetDetail>(
+        `${API_URL}/api/pets/${petId}`,
+        { headers: authHeaders() }
+    );
+    return data;
+};
+
+

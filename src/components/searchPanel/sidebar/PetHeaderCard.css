@@ -1,0 +1,58 @@
+.pet-header-card {
+    padding: 16px;
+    border-bottom: 1px solid #e9e5e0;
+}
+
+.pet-header-card__identity {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.pet-header-card__avatar {
+    flex-shrink: 0;
+}
+
+.pet-header-card__info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.pet-header-card__name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #2c1f14;
+    line-height: 1.2;
+}
+
+.pet-header-card__badge {
+    font-size: 13px;
+    color: #b58a52;
+}
+
+.pet-header-card__found-btn {
+    background-color: #2c1f14 !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 8px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    padding: 9px 12px !important;
+    cursor: pointer;
+    display: flex !important;
+    align-items: center !important;
+    gap: 7px !important;
+    transition: background-color 0.2s ease !important;
+    height: auto !important;
+}
+
+.pet-header-card__found-btn:hover {
+    background-color: #4a3322 !important;
+}
+
+.pet-header-card__found-btn-icon {
+    font-size: 14px;
+}

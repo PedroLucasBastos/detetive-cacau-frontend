@@ -1,0 +1,82 @@
+/* ─── Container principal ────────────────────────────────────────────────────── */
+
+.pet-campaign-map {
+    width: 100%;
+    height: 200px;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* ─── Canvas do MapLibre ─────────────────────────────────────────────────────── */
+
+.pet-campaign-map__canvas {
+    width: 100%;
+    height: 100%;
+}
+
+/* ─── Estado vazio (sem localização) ─────────────────────────────────────────── */
+
+.pet-campaign-map--empty {
+    background-color: #f5ede4;
+    border: 1.5px dashed #c8a06e;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 20px;
+    text-align: center;
+}
+
+.pet-campaign-map__empty-icon {
+    font-size: 28px;
+    opacity: 0.7;
+}
+
+.pet-campaign-map__empty-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #5a3e28;
+    margin: 0;
+}
+
+.pet-campaign-map__empty-subtitle {
+    font-size: 11.5px;
+    color: #9e7a54;
+    margin: 0;
+    line-height: 1.5;
+    max-width: 240px;
+}
+
+/* ─── Marcador customizado do pet ────────────────────────────────────────────── */
+
+.campaign-map-marker {
+    cursor: pointer;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
+}
+
+.campaign-map-marker__inner {
+    width: 36px;
+    height: 36px;
+    background: #fff;
+    border: 2.5px solid #8a5a2a;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+.campaign-map-marker__inner {
+    /* Corrige rotação do emoji dentro do pin rotacionado */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* O emoji precisa ser contra-rotacionado para ficar upright */
+.campaign-map-marker__inner::after {
+    content: attr(data-emoji);
+}

@@ -197,8 +197,8 @@ function ProfileUser() {
                             {pets.map(({ pet, thumbUrl, loadingThumb }) => (
                                 <div
                                     key={pet.id}
-                                    onClick={() => navigate(`/meus-pets/${pet.id}`)}
-                                    className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow cursor-pointer"
+                                    onClick={() => navigate(`/painel-busca/${pet.id}`)}
+                                    className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow cursor-pointer flex flex-col"
                                 >
                                     {/* Foto */}
                                     <div className="aspect-square bg-gray-100 flex items-center justify-center">
@@ -238,11 +238,21 @@ function ProfileUser() {
                                         )}
                                     </div>
 
-                                    {/* Nome */}
-                                    <div className="px-3 py-2 text-center">
-                                        <p className="text-sm font-medium text-gray-700 truncate">
+                                    {/* Nome e Botão */}
+                                    <div className="px-3 py-3 flex flex-col gap-2 flex-grow justify-between">
+                                        <p className="text-sm font-medium text-gray-700 truncate text-center">
                                             {pet.name}
                                         </p>
+                                        <button
+                                            type="button"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                navigate(`/meus-pets/${pet.id}`);
+                                            }}
+                                            className="w-full flex items-center justify-center px-3 py-2 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold rounded-md shadow-sm hover:shadow transition-all duration-200 text-xs"
+                                        >
+                                            Editar informações
+                                        </button>
                                     </div>
                                 </div>
                             ))}

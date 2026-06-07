@@ -1,0 +1,67 @@
+.search-dashboard {
+    flex: 1;
+    padding: 24px 28px;
+    overflow-y: auto;
+    background-color: #faf8f5;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ── Cabeçalho ───────────────────────────────────────────────── */
+
+.search-dashboard__header {
+    margin-bottom: 16px;
+}
+
+.search-dashboard__title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2c1f14;
+    margin: 0 0 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.search-dashboard__title-icon {
+    font-size: 16px;
+    color: #b58a52;
+}
+
+.search-dashboard__subtitle {
+    font-size: 13px;
+    color: #3b82f6;
+    margin: 0;
+    font-weight: 400;
+}
+
+.search-dashboard__divider {
+    height: 1px;
+    background-color: #e0d8d0;
+    margin-bottom: 20px;
+}
+
+/* ── Conteúdo ────────────────────────────────────────────────── */
+
+.search-dashboard__content {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 20px;
+    align-items: start;
+}
+
+@media (max-width: 1100px) {
+    .search-dashboard__content {
+        grid-template-columns: 1fr 240px;
+    }
+}
+
+@media (max-width: 860px) {
+    .search-dashboard__content {
+        grid-template-columns: 1fr;
+    }
+
+    .search-dashboard {
+        padding: 16px;
+    }
+}

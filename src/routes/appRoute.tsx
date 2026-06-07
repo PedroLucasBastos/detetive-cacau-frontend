@@ -13,6 +13,7 @@ function AppRoute() {
     return (
         <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/mapa" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/profile" element={<ProfileUser />} />
             <Route path="/create-account" element={<CreateAccoutPage />} />

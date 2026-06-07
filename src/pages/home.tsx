@@ -109,7 +109,7 @@ function Home() {
                     <div className="home-hero__image-wrapper">
                         <div className="home-hero__image-glow" />
                         <img
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDA4QXxCLnFgb8iI-omyxHLCeJ8_7DxhPf6cG_POeF3gOreF30yT1ugwgo-vrcqMKwHaRNeE1lNGhhiXy_RYzGviRdLWIGYWnpaAvGRFMYhlFqe1rpxO1-SunRjIiPjB9aOHT0ib2luqvLa49uOk8lRuAFSe_HMstbADYXisWfCsHi7KMqWb_ynyrFYIip-sY4wvvJF-R1iUlm2ru_GzILGZ5UuXB3OtpWI3-luM1TqzV3eiRK9SeZ0GVGc1_x2Z_FJCms43B3P9kFy"
+                            src="./img/dogRunHome.png"
                             alt="Pessoa abraçando um cachorro feliz"
                             className="home-hero__image"
                         />

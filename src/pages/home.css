@@ -27,7 +27,7 @@
 .home-hero__inner {
     max-width: 1280px;
     margin: 0 auto;
-    padding: 64px 32px;
+    padding: 80px 32px 64px;
     display: flex;
     align-items: center;
     gap: 48px;
@@ -41,43 +41,46 @@
 }
 
 .home-hero__title {
-    font-size: clamp(40px, 6vw, 72px);
+    font-size: clamp(32px, 5vw, 72px);
     font-weight: 800;
     letter-spacing: -0.02em;
     line-height: 1.08;
     color: #3D2B1F;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 }
 
 .home-hero__subtitle {
-    font-size: 18px;
+    font-size: clamp(15px, 2vw, 18px);
     color: #4b5563;
     font-weight: 500;
     max-width: 560px;
     line-height: 1.7;
-    margin-bottom: 40px;
+    margin-bottom: 36px;
 }
 
 /* ── CTA Buttons ───────────────────────────────────────────────── */
 .home-hero__cta-group {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 16px;
     margin-bottom: 32px;
+    flex-wrap: wrap;
 }
 
 .home-cta-btn {
     display: flex;
     align-items: center;
     gap: 16px;
-    padding: 16px 32px;
+    padding: 16px 28px;
     border-radius: 12px;
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 700;
     cursor: pointer;
     border: 2px solid transparent;
     transition: all 0.2s ease;
     text-align: left;
+    flex: 1;
+    min-width: 220px;
 }
 
 .home-cta-btn--primary {
@@ -128,14 +131,6 @@
     background-color: rgba(230, 188, 71, 0.22);
 }
 
-.home-cta-btn__icon .material-symbols-outlined {
-    font-size: 24px;
-}
-
-.home-cta-btn--secondary .home-cta-btn__icon .material-symbols-outlined {
-    color: #E6BC47;
-}
-
 .home-cta-btn__text {
     display: flex;
     flex-direction: column;
@@ -178,11 +173,9 @@
 
 .home-hero__how-icon {
     color: #E6BC47;
-    font-size: 20px;
 }
 
 .home-hero__how-arrow {
-    font-size: 18px;
     transition: transform 0.2s ease;
 }
 
@@ -195,7 +188,7 @@
     flex: 1;
     position: relative;
     width: 100%;
-    max-width: 480px;
+    max-width: 440px;
 }
 
 .home-hero__image-glow {
@@ -246,13 +239,14 @@
 }
 
 .home-search__field {
-    flex: 1;
+    flex: 1 1 200px;
     position: relative;
-    min-width: 200px;
+    min-width: 0;
 }
 
 .home-search__field--location {
-    flex: 0 1 280px;
+    flex: 0 1 240px;
+    min-width: 0;
 }
 
 .home-search__icon {
@@ -261,13 +255,12 @@
     left: 16px;
     transform: translateY(-50%);
     color: #9ca3af;
-    font-size: 22px;
     pointer-events: none;
 }
 
 .home-search__input {
     width: 100%;
-    padding: 16px 16px 16px 52px;
+    padding: 14px 14px 14px 48px;
     background-color: rgba(243, 242, 241, 0.5);
     border: 1px solid transparent;
     border-radius: 12px;
@@ -292,7 +285,7 @@
 .home-search__btn {
     background-color: #3D2B1F;
     color: #ffffff;
-    padding: 16px 40px;
+    padding: 14px 32px;
     border-radius: 12px;
     font-size: 15px;
     font-weight: 700;
@@ -320,7 +313,7 @@
     width: 100%;
     box-sizing: border-box;
     margin: 0 auto;
-    padding: 0 32px 48px;
+    padding: 0 32px 64px;
     display: flex;
     gap: 32px;
     align-items: flex-start;
@@ -335,15 +328,14 @@
     border: 1px solid #f3f2f1;
     border-radius: 24px;
     overflow: hidden;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-    height: 600px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    height: 580px;
 }
 
-/* Map container fills the wrapper */
 .home-map-container {
     width: 100%;
     height: 100%;
-    min-height: 600px;
+    min-height: 580px;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -410,11 +402,11 @@
 ════════════════════════════════════════════════════════════════ */
 .home-recent {
     flex: 1 1 0%;
-    min-width: 320px;
+    min-width: 300px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
-    max-height: 600px;
+    gap: 20px;
+    max-height: 580px;
 }
 
 .home-recent__header {
@@ -442,10 +434,6 @@
 
 .home-recent__see-all:hover {
     color: #3D2B1F;
-}
-
-.home-recent__see-all-icon {
-    font-size: 16px;
 }
 
 /* ── Cards list ────────────────────────────────────────────────── */
@@ -479,7 +467,7 @@
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
     border: 1px solid #f3f2f1;
     display: flex;
-    gap: 16px;
+    gap: 14px;
     cursor: pointer;
     transition: box-shadow 0.2s ease;
 }
@@ -489,8 +477,8 @@
 }
 
 .home-recent__card-img {
-    width: 96px;
-    height: 96px;
+    width: 80px;
+    height: 80px;
     border-radius: 12px;
     background-color: #e5e7eb;
     flex-shrink: 0;
@@ -512,7 +500,7 @@
 }
 
 .home-recent__card-emoji {
-    font-size: 40px;
+    font-size: 36px;
 }
 
 .home-recent__card-body {
@@ -528,18 +516,22 @@
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 4px;
+    gap: 8px;
 }
 
 .home-recent__card-name {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
     color: #3D2B1F;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .home-recent__card-location {
-    font-size: 14px;
+    font-size: 13px;
     color: #6b7280;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -554,19 +546,16 @@
     margin-top: auto;
 }
 
-.home-recent__time-icon {
-    font-size: 14px;
-}
-
 /* ── Badges ────────────────────────────────────────────────────── */
 .home-recent__badge {
     padding: 2px 8px;
     border-radius: 6px;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.04em;
     flex-shrink: 0;
+    white-space: nowrap;
 }
 
 .home-recent__badge--lost {
@@ -588,18 +577,13 @@
 }
 
 /* ════════════════════════════════════════════════════════════════
-   RESPONSIVE
+   RESPONSIVE — TABLET  (≤ 1024px)
 ════════════════════════════════════════════════════════════════ */
-@media (min-width: 640px) {
-    .home-hero__cta-group {
-        flex-direction: row;
-    }
-}
-
 @media (max-width: 1024px) {
     .home-hero__inner {
-        flex-direction: column;
-        padding: 48px 24px;
+        flex-direction: column-reverse;
+        padding: 48px 24px 40px;
+        gap: 32px;
     }
 
     .home-hero__content {
@@ -616,12 +600,17 @@
     }
 
     .home-hero__how-link {
+        display: inline-flex;
         margin: 0 auto;
     }
 
     .home-hero__image-wrapper {
-        max-width: 400px;
+        max-width: 360px;
         margin: 0 auto;
+    }
+
+    .home-search__inner {
+        padding: 0 24px;
     }
 
     .home-map-section {
@@ -631,34 +620,71 @@
 
     .home-map-wrapper {
         width: 100%;
-        height: 450px;
+        height: 420px;
+    }
+
+    .home-map-container {
+        min-height: 420px;
     }
 
     .home-recent {
         max-height: none;
+        min-width: 0;
+        width: 100%;
+    }
+
+    /* Recentes em grid de 2 colunas no tablet */
+    .home-recent__list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+        overflow-y: visible;
     }
 }
 
+/* ════════════════════════════════════════════════════════════════
+   RESPONSIVE — MOBILE  (≤ 640px)
+════════════════════════════════════════════════════════════════ */
 @media (max-width: 640px) {
+
+    /* ── Hero ── */
     .home-hero__inner {
-        padding: 32px 16px;
+        padding: 32px 16px 28px;
+        gap: 20px;
     }
 
     .home-hero__title {
-        font-size: 36px;
+        font-size: 30px;
+        margin-bottom: 14px;
     }
 
     .home-hero__subtitle {
-        font-size: 16px;
+        font-size: 15px;
+        margin-bottom: 28px;
     }
 
+    /* Imagem menor no mobile */
+    .home-hero__image-wrapper {
+        max-width: 260px;
+    }
+
+    /* Botões CTA em coluna no mobile */
     .home-hero__cta-group {
         flex-direction: column;
+        gap: 12px;
     }
 
     .home-cta-btn {
-        font-size: 16px;
-        padding: 14px 24px;
+        font-size: 15px;
+        padding: 14px 20px;
+        min-width: 0;
+        flex: 1 1 auto;
+        width: 100%;
+    }
+
+    /* ── Search bar ── */
+    .home-search {
+        margin-bottom: 32px;
     }
 
     .home-search__inner {
@@ -667,21 +693,101 @@
 
     .home-search__bar {
         flex-direction: column;
+        gap: 8px;
+        padding: 10px;
     }
 
+    .home-search__field,
     .home-search__field--location {
-        flex: 1;
+        flex: 1 1 auto;
+        width: 100%;
+    }
+
+    .home-search__input {
+        padding: 13px 13px 13px 44px;
     }
 
     .home-search__btn {
         width: 100%;
+        padding: 14px;
     }
 
+    /* ── Mapa ── */
     .home-map-section {
         padding: 0 16px 32px;
+        gap: 24px;
     }
 
     .home-map-wrapper {
-        height: 320px;
+        height: 300px;
+        border-radius: 16px;
+    }
+
+    .home-map-container {
+        min-height: 300px;
+    }
+
+    /* Filtros do mapa menores */
+    .home-map-filter {
+        padding: 5px 10px;
+        font-size: 11px;
+    }
+
+    /* ── Recentes ── */
+    .home-recent__list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        overflow-y: visible;
+    }
+
+    .home-recent__card {
+        gap: 12px;
+        padding: 10px;
+    }
+
+    .home-recent__card-img {
+        width: 68px;
+        height: 68px;
+        border-radius: 10px;
+    }
+
+    .home-recent__card-emoji {
+        font-size: 28px;
+    }
+
+    .home-recent__card-name {
+        font-size: 15px;
+    }
+
+    .home-recent__title {
+        font-size: 18px;
+    }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   RESPONSIVE — EXTRA SMALL  (≤ 380px)
+════════════════════════════════════════════════════════════════ */
+@media (max-width: 380px) {
+    .home-hero__title {
+        font-size: 26px;
+    }
+
+    .home-hero__image-wrapper {
+        max-width: 200px;
+    }
+
+    .home-cta-btn {
+        font-size: 14px;
+        padding: 12px 16px;
+        gap: 12px;
+    }
+
+    .home-map-wrapper {
+        height: 260px;
+    }
+
+    .home-map-container {
+        min-height: 260px;
     }
 }
